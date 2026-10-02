@@ -21,8 +21,14 @@
 	// bindings, so there's no D1 database here yet: adding one is part of the
 	// workshop.
 	"previews": {
-		"vars": {
-			"ENVIRONMENT": "preview"
-		}
-	}
+  "vars": { "ENVIRONMENT": "preview" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "workshop-preview-db",
+      "database_id": "539c3fb7-3066-4ff5-9351-1079bb1fea09"
+    }
+  ],
+  "observability": { "enabled": true }
+}
 }
