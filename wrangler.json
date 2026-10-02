@@ -1,0 +1,28 @@
+{
+	"compatibility_date": "2025-10-08",
+	"main": "src/index.ts",
+	"name": "wps-agent-dryrun",
+	"upload_source_maps": true,
+	// Production settings live at the top level.
+	"vars": {
+		"ENVIRONMENT": "production"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_id": "47a1ab91-a13c-41fb-b6b0-e3cd91c1fd69",
+			"database_name": "activity-log-db"
+		}
+	],
+	"observability": {
+		"enabled": true
+	},
+	// Preview settings live here. Previews don't inherit production vars or
+	// bindings, so there's no D1 database here yet: adding one is part of the
+	// workshop.
+	"previews": {
+		"vars": {
+			"ENVIRONMENT": "preview"
+		}
+	}
+}
