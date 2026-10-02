@@ -17,6 +17,7 @@ export function renderHtml(environment: string | undefined) {
           .entry-form { display: flex; gap: 0.5rem; margin: 1rem 0; }
           .entry-form input { flex: 1; padding: 0.5rem; }
           .entry-empty { opacity: 0.6; font-style: italic; }
+          .entry-count { margin: 0.25rem 0 0.75rem; font-weight: 600; opacity: 0.75; }
           .entry-error { display: none; margin: 1rem 0; padding: 0.75rem; border: 1px solid #dc2626; border-radius: 0.35rem; color: #991b1b; background: #fef2f2; }
           .entry-error[data-visible="true"] { display: block; }
           ${environmentBadgeCss}
@@ -30,6 +31,7 @@ export function renderHtml(environment: string | undefined) {
           />
           ${renderEnvironmentBadge(environment)}
           <h1>📋 Activity Log</h1>
+          <p id="entry-count" class="entry-count" aria-live="polite">Loading entries…</p>
           <p>Worker + D1 — add and delete entries, backed by a real database.</p>
         </header>
         <main>
@@ -52,6 +54,7 @@ export function renderHtml(environment: string | undefined) {
           const formEl = document.getElementById("entry-form");
           const inputEl = document.getElementById("entry-text");
           const errorEl = document.getElementById("entry-error");
+          const countEl = document.getElementById("entry-count");
 
           function clearError() {
             errorEl.textContent = "";
@@ -68,6 +71,7 @@ export function renderHtml(environment: string | undefined) {
           }
 
           function renderEntries(entries) {
+            countEl.textContent = entries.length === 1 ? "1 entry" : entries.length + " entries";
             listEl.innerHTML = "";
             if (entries.length === 0) {
               const li = document.createElement("li");
@@ -107,6 +111,7 @@ export function renderHtml(environment: string | undefined) {
             const res = await fetch("/api/entries");
             const data = await readJson(res);
             if (!res.ok) {
+              countEl.textContent = "";
               showError(data.error || "Could not load entries.");
               return;
             }
